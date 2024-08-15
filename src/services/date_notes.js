@@ -68,7 +68,7 @@ function getYearNote(dateStr, rootNote = null) {
 
     const yearStr = dateStr.trim().substr(0, 4);
 
-    let yearNote = searchService.findFirstNoteWithQuery(`#${YEAR_LABEL}="${yearStr}"`,
+    let yearNote = searchService.findFirstNoteWithQuery(`#${YEAR_LABEL}="${yearStr}(${yearStr-1})"`,
             new SearchContext({ancestorNoteId: rootNote.noteId}));
 
     if (yearNote) {
@@ -91,14 +91,16 @@ function getYearNote(dateStr, rootNote = null) {
     return yearNote;
 }
 
-function getMonthNoteTitle(rootNote, monthNumber, dateObj) {
+function getMonthNoteTitle(dateStr,rootNote, monthNumber, dateObj) {
     const pattern = rootNote.getOwnedLabelValue("monthPattern") || "{monthNumberPadded} - {month}";
     const monthName = MONTHS[dateObj.getMonth()];
+    const yearNumber = dateStr.trim().substr(0, 4);
 
     return pattern
         .replace(/{shortMonth3}/g, monthName.slice(0,3))
         .replace(/{shortMonth4}/g, monthName.slice(0,4))
         .replace(/{monthNumberPadded}/g, monthNumber)
+        .replace(/{yearNumber}/g, yearNumber)
         .replace(/{month}/g, monthName);
 }
 
