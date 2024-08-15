@@ -68,7 +68,7 @@ function getYearNote(dateStr, rootNote = null) {
 
     const yearStr = dateStr.trim().substr(0, 4);
 
-    let yearNote = searchService.findFirstNoteWithQuery(`#${YEAR_LABEL}="${yearStr}(${yearStr-1})"`,
+    let yearNote = searchService.findFirstNoteWithQuery(`#${YEAR_LABEL}="${yearStr} (${yearStr-1})"`,
             new SearchContext({ancestorNoteId: rootNote.noteId}));
 
     if (yearNote) {
